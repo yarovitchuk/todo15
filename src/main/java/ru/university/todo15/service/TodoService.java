@@ -4,6 +4,8 @@ import ru.university.todo15.exception.TodoTitleEmptyException;
 import ru.university.todo15.model.Todo;
 import ru.university.todo15.repository.TodoRepo;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TodoService {
@@ -26,13 +28,19 @@ public class TodoService {
     }
 
     public Todo update(Todo newTodo) {
-        "1234".equals()
-        if (newTodo.title() != "") {
+        if (newTodo.title().isBlank()) {
             throw new TodoTitleEmptyException();
         }
 
-        newTodo.equals()
+        repo.update(newTodo);
+        return newTodo;
+    }
 
+    public List<Todo> getAll() {
+        return repo.list();
+    }
 
+    public Optional<Todo> getById(UUID id) {
+        return repo.getById(id);
     }
 }
