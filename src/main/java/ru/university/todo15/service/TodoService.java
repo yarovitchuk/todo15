@@ -1,8 +1,9 @@
 package ru.university.todo15.service;
 
+import ru.university.todo15.exception.TodoNotFoundException;
 import ru.university.todo15.exception.TodoTitleEmptyException;
 import ru.university.todo15.model.Todo;
-import ru.university.todo15.repository.TodoRepo;
+import ru.university.todo15.repository.TodoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +11,9 @@ import java.util.UUID;
 
 public class TodoService {
 
-    private final TodoRepo repo;
+    private final TodoRepository repo;
 
-    public TodoService(TodoRepo repo) {
+    public TodoService(TodoRepository repo) {
         this.repo = repo;
     }
 
@@ -42,5 +43,13 @@ public class TodoService {
 
     public Optional<Todo> getById(UUID id) {
         return repo.getById(id);
+    }
+
+    public boolean deleteById(UUID id) {
+        if (!repo.delete(id)) {
+            throw new TodoNotFoundException(id);
+        }
+
+        return true;
     }
 }
